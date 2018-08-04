@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(),TextView.OnEditorActionListener, OnMapR
 
     val FINSH_INTERVAL_TIME = 2000
     var backPressedTime:Long = 0
-    var searchList :MutableList<AdapterItem> = ArrayList()
+    var searchList :MutableList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +52,7 @@ class MainActivity : AppCompatActivity(),TextView.OnEditorActionListener, OnMapR
 
         if (v?.id == R.id.searchEdit && actionId == EditorInfo.IME_ACTION_DONE || event?.action == KeyEvent.ACTION_DOWN) { // 뷰의 id를 식별, 키보드의 완료 키 입력 검출
             val text = v?.text.toString()
-            // text === "Name" // 객체 비교
-            // text == "name" // 객체의 실제 값을 비교
-            if (text == "Name") {
-                searchList.add(AdapterItem(v?.text.toString(), 100))
-            } else {
-                searchList.add(AdapterItem(v?.text.toString(), 0))
-            }
+            searchList.add(text)
         }
         return false
     }

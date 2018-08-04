@@ -14,15 +14,9 @@ interface OnItemClickListener {
     fun onItemDelete(position: Int)
 }
 
+class ViewHolder(override val containerView: View,val listener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-abstract class BaseViewHolder<T: Any>(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-    abstract fun bind(item: T)
-}
-
-class ViewHolder(itemView: View,val listener: OnItemClickListener) : BaseViewHolder<String>(itemView) {
-
-    override fun bind(item: String) {
+    fun bind(item: String) {
         recentText.text = item
         recentText.setOnClickListener {
             listener.onItemClick(item)
@@ -33,35 +27,18 @@ class ViewHolder(itemView: View,val listener: OnItemClickListener) : BaseViewHol
     }
 }
 
-class RecentViewHolder(itemView: View) : BaseViewHolder<String>(itemView) {
+class RecyclerAdapter(val items : List<String>,val context:Context,val listener: OnItemClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
-    override fun bind(item: String) {
-        recentText.text = item
-    }
-}
-
-class RecyclerAdapter(val items : List<AdapterItem>,val context:Context,val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<String>>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<String> {
-        return when (viewType) {
-            100 -> RecentViewHolder(LayoutInflater.from(context).inflate(R.layout.recent_search, parent, false))
-            else ->ViewHolder(LayoutInflater.from(context).inflate(R.layout.recent_search, parent, false),listener)
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return items[position].viewType
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.recent_search, parent, false),listener)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<String>, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //holder.recentText.text = items[position]
-        holder.bind(items[position].name)
+        holder.bind(items[position])
     }
 }
-
-data class AdapterItem(val name: String, val viewType: Int)
-
