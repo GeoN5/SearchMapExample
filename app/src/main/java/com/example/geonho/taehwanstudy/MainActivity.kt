@@ -10,6 +10,10 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import com.example.geonho.taehwanstudy.util.getData
+import com.example.geonho.taehwanstudy.util.getList
+import com.example.geonho.taehwanstudy.util.saveData
+import com.example.geonho.taehwanstudy.util.saveList
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapFragment
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity(),TextView.OnEditorActionListener, OnMapR
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+        searchList.addAll(getList("list"))
 
         init()
         setListeners()
@@ -80,6 +85,7 @@ class MainActivity : AppCompatActivity(),TextView.OnEditorActionListener, OnMapR
     }
 
     override fun onBackPressed() {
+        searchList.saveList(this,"list")
         if (recyclerview.visibility != View.GONE) {
             recyclerview.visibility = View.GONE
         } else {
