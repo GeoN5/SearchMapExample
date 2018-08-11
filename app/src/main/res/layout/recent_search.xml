@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:textColor="@android:color/black"
-        android:text="abc"/>
+        android:text="abc" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -31,7 +31,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#0d6a86"/>
 
 </LinearLayout>
